@@ -1,0 +1,14 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/*
+knext time with tailwind put the jbelow code in inputcss
+*/
+
+
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
