@@ -246,7 +246,7 @@ const vid = biscuit.get("chat-room")
       <Route path="/selectchat" element={<Selectchat isauth={isauth} setroom={setroom} room={room} setusername={setusername} username={username}/>}/>
       {/* <Route path="/chatroom" element={<Chatroom setisauth={setisauth} room={room} isauth={isauth} setusername={setusername} username={username}/>}/> */}
 
-      <Route path="/chat_layout/:room" element={<Chat_layout room={room} isauth={isauth}  roomslist={roomslist} setroomslist={setroomslist} />}/>
+      <Route path="/chat_layout/" element={<Chat_layout room={room} isauth={isauth}  roomslist={roomslist} setroomslist={setroomslist} />}/>
 
       {/* <Route path="/prototype" element={<Prototype room={room} isauth={isauth}/>}/> */}
     </Routes>
@@ -433,8 +433,10 @@ const Chat_layout = (props)=>{
   useEffect(()=>{
     console.log(isauth);
 
-    (biscuit.get("auth-token")===undefined)?goto("/"):"";
-
+    //fixing routing
+    /*
+    (biscuit.get("auth-token")===undefined)?goto("/auth"):goto("/chat_layout");
+    */
     
   },[]);
 
@@ -443,7 +445,7 @@ return(
   <div>
     <div className="universe flex flex-row grow justify-center absolute" style={{height:"auto",width:"100vw",color:"white"}}>
 
-<div className="leftsideuniverse " >
+<div className="leftsideuniverse sticky top-0" >
 <Leftuniv roomslist={roomslist} setroomslist={setroomslist}/>
 </div>
 
@@ -561,8 +563,9 @@ export const Chatroomlist = ({roomslist,setroomslist}) => {
       
       </div>
     <div className="scroll-god " onClick={  ()=>{  console.log(roomslist);   window.location.reload();    }  }>
+      <div className="roomattopstick sticky">
 
-
+          
  
 
 
@@ -595,6 +598,7 @@ export const Chatroomlist = ({roomslist,setroomslist}) => {
           </div>
         );
       })}
+    </div>
     </div>
 </>
   )
@@ -1358,7 +1362,12 @@ export const Testchatrom = (props) => {
       console.log("from left universe");
       console.log(biscuit.get("room"));
 
-      biscuit.get("room")!==null?goto("/chat_layout"):goto("/");
+      //fixing routing
+      /*
+      biscuit.get("room")==null?goto("/"):goto("/chat_layout");
+      */
+
+
       // console.log("from testroom: isauth="+isauth);
       // isauth?goto("/testchatroom"):goto("/");
 
@@ -1428,7 +1437,7 @@ export const Testchatrom = (props) => {
 
       <div className="tt2 ">
 
-<div> 
+<div className="borderdiv"> 
       <div className="room-banner flex flex-row justify-center sticky top-0">
         <div></div>
       <p className="roomname rounded-xl p-5 text-xl">
@@ -1457,6 +1466,8 @@ export const Testchatrom = (props) => {
             
 
             <div className="msg-container-outline">
+              <div className="img-deco">
+
             {
             messages.msgtype==="image/png"?
             <img src={messages.content_url} className={`imageee ${messages.user===biscuit.get("user-id")?"m-sent":"m-recieved"}`} alt="" />
@@ -1468,6 +1479,8 @@ export const Testchatrom = (props) => {
             <a  href={messages.content_url} target="_blank" className={`message22 flex ${messages.user===biscuit.get("user-id")?"m-sent":"m-recieved"}`} > <p className={`m-deco-txt flex flex-col justify-center pb-1 px-2 rounded ${messages.user===biscuit.get("user-id")?"m-sent":"m-recieved"}`}><u> Link</u></p></a>
           }
                </div>
+               </div>
+
           
           
           </div>
@@ -1524,16 +1537,20 @@ export const Authen = ({isauth,setisauth}) => {
   // const {setisauth,isauth} = props;
   const biscuit = new Cookies()
   
-  
+  //fixing routing
+/*
+
   try{
 
   useEffect(()=>{
     console.log(isauth);
     // console.log(biscuit.get("auth-token"))
 
-    (biscuit.get("auth-token")===undefined)?goto("/"):goto("/selectchat");
+    (biscuit.get("auth-token")===undefined)?goto("/auth"):goto("/selectchat");
     
   },[]);
+
+
   }catch(err){
     console.log("this is error:");
     console.error(err);
@@ -1542,9 +1559,11 @@ export const Authen = ({isauth,setisauth}) => {
   }
 
 
+*/
+
   return (
     <div className="authentication"> 
-      <Signin setisauth={setisauth}/>
+      <SigninWithGoogle setisauth={setisauth}/>
     <Signout setisauth={setisauth} />
     <Anonymous setisauth={setisauth}/>
     
@@ -1554,7 +1573,7 @@ export const Authen = ({isauth,setisauth}) => {
 
 //-----------------------------sign in-------------------------------------------------------
 
-export const Signin = ({isauth,setisauth}) => {
+export const SigninWithGoogle = ({isauth,setisauth}) => {
   // const {setisauth}=props;
   const goto = useNavigate();
   const biscuit= new Cookies();
@@ -1745,6 +1764,9 @@ const Selectchat= ({isauth,setisauth,setroom,room,setusername,username})=>{
   const usernameref = useRef(null);
   const inputref = useRef(null);
 
+
+//fixing routing
+  /*
   useEffect(()=>{
     console.log("from selectchat");
     // console.log(biscuit.get("auth-token"))
@@ -1755,7 +1777,7 @@ const Selectchat= ({isauth,setisauth,setroom,room,setusername,username})=>{
 
     
   },[]);
-
+*/
 
   return(
     <div className="selectchat">
@@ -1766,7 +1788,7 @@ const Selectchat= ({isauth,setisauth,setroom,room,setusername,username})=>{
       ref={inputref}
        />
 
-       <input type="text" className="imput text-black" ref={usernameref} />
+       <input type="text" className="imput text-black" ref={usernameref} enterKeyHint="apple"/>
 
       <button className="button text-white" onClick={()=>{
         if ( usernameref.current.value==="" ){}else{
