@@ -2,7 +2,7 @@
 
 Welcome to OrinChat! OrinChat is an ongoing project designed to facilitate communication through chat rooms, allowing users to engage in both one-on-one and group discussions.
 
-## Features (Under Development)
+## Features
 
 - **Chat Rooms**: Join various chat rooms for one-on-one or group conversations.
 - **Media Sharing**: Share videos and images to enrich communication within the chat rooms.
