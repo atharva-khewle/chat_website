@@ -14,4 +14,4 @@ OrinChat is currently in development, creating a platform for diverse conversati
 
 #### Feedback
 
-Your feedback is vital in shaping the future of OrinChat. Please share your suggestions, feedback, or ideas at [insert contact information].
+Your feedback is vital in shaping the future of OrinChat. Please share your suggestions, feedback or any ideas.
