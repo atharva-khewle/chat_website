@@ -339,7 +339,6 @@ const RegisterPage = () => {
 
   const registeracc= async()=>{
      const d= await userexists();
-     const photo= await userexistphoto();
 
      console.log("kkk"+d);
     if(usernameref.current.value!="" && passref.current.value!=""  && d==false){
@@ -1066,7 +1065,7 @@ const Landingpage = () => {
                 biscuit.get("username")
                 ?
                 <div className="Lpfp" onClick={()=>goto("/profilepage")}>
-                        <img src="./src/assets/images/pfp.png" className="Lpfp" />
+                        <img src={biscuit.get("photo")?biscuit.get("photo"):"./src/assets/images/pfp.png"}  className="Lpfp" />
                 </div>
                 :
                 <>
