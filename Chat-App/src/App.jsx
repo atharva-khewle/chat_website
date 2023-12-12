@@ -26,6 +26,8 @@ import {
   addDoc,
   collection,
   disablePersistentCacheIndexAutoCreation,
+  getDoc,
+  getDocs,
   getFirestore,
   onSnapshot,
   orderBy,
@@ -130,6 +132,7 @@ const db = getFirestore(app);
 const auth = firebase.auth();
 const firestore = firebase.firestore();
 const msgdbref = collection(db, "messages");
+const userdbref = collection(db,"users");
 const storage = getStorage(app);
 
 //----------------------------------------------------app--------------------------------------
@@ -224,8 +227,12 @@ function App() {
                 />
               }
             />
-            <Route path="/ProfilePage" element={<ProfilePage />} />
+            <Route path="/ProfilePage" element={<ProfilePage
+                  roomslist={roomslist}
+                  setroomslist={setroomslist}
+             />} />
             <Route path="/LoginPage" element={<LoginPage />} />
+            <Route path="/RegisterPage" element={<RegisterPage />} />
 
             {/* <Route path="/prototype" element={<Prototype room={room} isauth={isauth}/>}/> */}
           </Routes>
@@ -237,10 +244,395 @@ function App() {
 
 export default App;
 
-//--------------------login --------------------------------
+
+
+
+
+
+
+//-------------------Register Page-------------------------------
+
+
+const RegisterPage = () => {
+  var [seepass,setseepass]=useState(false);
+  const goto= useNavigate();
+  const biscuit = new Cookies();
+  const usernameref = useRef(null);
+  const passref = useRef(null);
+
+
+
+
+  const userexists2=async (a)=>{
+    // const [i,seti]=useState(false);
+    
+    const querymsg = await query(
+      userdbref,
+      where("username","==",a)
+    );
+    
+    let messages=[];
+    const snapshot = await getDocs(querymsg);
+    await snapshot;
+    // console.log("snapshot"+snapshot.docs.length);
+    // console.log(snapshot);
+    // console.log("snapshot");
+
+    if(snapshot.docs.length==0){
+      return false;
+    }return true;
+
+  }
+
+  const googlesignin = async () => {
+
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const result = await auth.signInWithPopup(provider);
+    const a = await userexists2(result.user.displayName);
+    console.log(a);
+      if(a==true){
+        //exists
+      }else{
+        //not exist
+        await addDoc(userdbref,
+          {
+            username:result.user.displayName,
+            password:result.user.displayName,
+            photo:result.user.photoURL
+          }
+          );
+      }
+      // biscuit.set("auth-token", result.user.refreshToken);
+      biscuit.set("username", result.user.displayName);
+      // setisauth(true);
+      goto("/profilepage");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const userexists=async ()=>{
+    // const [i,seti]=useState(false);
+    
+    const querymsg = await query(
+      userdbref,
+      where("username","==",usernameref.current.value)
+    );
+    
+    let messages=[];
+    const snapshot = await getDocs(querymsg);
+    await snapshot;
+    // console.log("snapshot"+snapshot.docs.length);
+    // console.log(snapshot);
+    // console.log("snapshot");
+
+    if(snapshot.docs.length==0){
+      return false;
+    }return true;
+
+  }
+
+
+
+
+
+  const registeracc= async()=>{
+     const d= await userexists();
+     const photo= await userexistphoto();
+
+     console.log("kkk"+d);
+    if(usernameref.current.value!="" && passref.current.value!=""  && d==false){
+      await addDoc(userdbref,
+        {
+          username:usernameref.current.value,
+          password:passref.current.value,
+          photo:""
+        }
+        );
+        console.log("updated");
+       
+        biscuit.set("username",usernameref.current.value);
+        goto("/profilepage");
+        alert("Registration Successfull");
+    }else{
+      alert("User Already Exists");
+    }
+  };
+  return (
+    <div className="alk ">
+      <nav className="navbar p-3 flex flex-row justify-center sticky top-0">
+        <div className="a3 flex flex-row justify-between">
+          <div className="flex flex-row "  >
+            <div>
+              <img src="./src/assets/images/logo.png" className="h-8" />
+            </div>
+            <div className="w-1 "></div>
+            <div className="fon flex flex-col justify-center text-bg">
+              OrionChat
+            </div>
+            <div className="w-6 "></div>
+            <div className="mon flex flex-col justify-center cursor-pointer"    onClick={()=>goto("/")}>Home</div>
+            {/* <div className="w-6 "></div>
+            <div className="mon flex flex-col justify-center ">Home</div>
+            <div className="w-6 "></div>
+            <div className="mon flex flex-col justify-center ">Home</div> */}
+          </div>
+
+          <div className="flex flex-row">
+            {/* <button className="navbtn">Log in</button> */}
+            <div className="w-5"></div>
+            {/* <button className="navbtn1 mon pt-0.5">Register</button> */}
+            <div className="w-30"></div>
+            {/* <button className="navbtn3">Stealth View</button> */}
+          </div>
+        </div>
+      </nav>
+
+      <div className="login-1 ">
+        <div className="login-banner ">
+          <div className="authen-left">
+            <div className="lbs"> </div>
+            <div className="lb1 flex flex-row ">
+              <div className="  lb1g " onClick={()=>{goto("/LoginPage");}}>
+                <p className="aa inline-block" >Login</p>
+              </div>
+              <div className=" lb1b   ">Register</div>
+            </div>
+            <div className="asfes h-5"></div>
+            <div className="wlcm flex flex-row ">
+              <div className="lkoijn flex flex-row">
+                <div className="lkj ">
+                  <p>Welcome aboard! </p>
+                </div>
+                <div className="lkj2 "></div>
+                <div className="asdf">
+                  <p></p>
+                </div>
+              </div>
+            </div>
+
+          <div className="btsfrm">
+
+{/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+
+
+
+
+<div className="asd1 "></div>
+
+
+
+
+
+
+<div class="input-group mb-3">
+<div className="csr2">
+
+  <span className="lkj4" class="input-group-text" id="basic-addon1" >
+  <span class="material-symbols-outlined">
+alternate_email
+</span>
+  </span>
+  </div>
+  <input className="lkj3" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" ref={usernameref}></input>
+</div>
+
+
+
+<div className="asd2 "></div>
+
+
+
+<div class="input-group mb-3">
+  <div className="csr">
+
+  <span className="lkj4" class="input-group-text" id="basic-addon1" onClick={()=>{setseepass(!seepass)}}>{
+    seepass?
+<span class="material-symbols-outlined">
+visibility
+</span>    :
+<span class="material-symbols-outlined">
+visibility_off
+</span>
+  }</span>
+    </div>
+  <input className="lkj3" type={seepass?"text":"password"} class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" ref={passref}></input>
+</div>
+
+
+
+
+<div className="asd3"></div>
+
+<div className="divbtnasd ">
+  <button className="asdbtn" onClick={registeracc}>Register</button>
+</div>
+
+<div className="divbtnasd"><p>Already have an account?</p><div className="ads flex w-2"></div><p className="k text-white cursor-pointer" onClick={()=>{goto("/LoginPage");}}> Login</p></div>
+
+<div className="asd4"></div>
+
+<div className="divbtnasd"><p>Or register with:</p></div>
+
+
+<div className="divbtnasd2 text-white">
+  <div className="fsa cursor-pointer" onClick={googlesignin}>
+
+<i class="bi bi-google"></i>
+  </div>
+</div>
+
+
+
+{/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
+            
+          </div>
+
+          </div>
+
+          <div className="authen-right">
+            <img src="./src/assets/images/gif.gif" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+
+
+//--------------------login Page --------------------------------
 
 const LoginPage = () => {
   var [seepass,setseepass]=useState(false);
+  const goto = useNavigate();
+  const biscuit = new Cookies();
+  const usernameref= useRef(null);
+  const passref= useRef(null);
+
+
+
+
+  
+  const userexists2=async (a)=>{
+    // const [i,seti]=useState(false);
+    
+    const querymsg = await query(
+      userdbref,
+      where("username","==",a)
+    );
+    
+    let messages=[];
+    const snapshot = await getDocs(querymsg);
+    await snapshot;
+    // console.log("snapshot"+snapshot.docs.length);
+    // console.log(snapshot);
+    // console.log("snapshot");
+
+    if(snapshot.docs.length==0){
+      return false;
+    }return true;
+
+  }
+  
+
+  const googlesignin = async () => {
+
+    try {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      const result = await auth.signInWithPopup(provider);
+    const a = await userexists2(result.user.displayName);
+    console.log(a);
+      if(a==true){
+        //exists
+      }else{
+        //not exist
+        await addDoc(userdbref,
+          {
+            username:result.user.displayName,
+            password:result.user.displayName,
+            photo:result.user.photoURL
+          }
+          );
+      }
+      // biscuit.set("auth-token", result.user.refreshToken);
+      biscuit.set("username", result.user.displayName);
+      // setisauth(true);
+      goto("/profilepage");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+
+
+  const userexist =async()=>{
+        
+    const querymsg = await query(
+      userdbref,
+      where("username","==",usernameref.current.value)
+    );
+    
+    let messages=[];
+    const snapshot = await getDocs(querymsg);
+    await snapshot;
+    console.log("snapshot"+snapshot.docs[0].data().password);
+    console.log(snapshot);
+    console.log("snapshot");
+
+    if(snapshot.docs.length==0){
+      return 0;
+    }return snapshot.docs[0].data().password;
+  }
+
+  const userexistphoto =async()=>{
+        
+    const querymsg = await query(
+      userdbref,
+      where("username","==",usernameref.current.value)
+    );
+    
+    let messages=[];
+    const snapshot = await getDocs(querymsg);
+    await snapshot;
+    console.log("snapshot"+snapshot.docs[0].data().photo);
+    console.log(snapshot);
+    console.log("snapshot");
+
+    if(snapshot.docs.length==0){
+      console.log("not sent")
+      return 0;
+    }
+    console.log("yes sent")
+
+    return snapshot.docs[0].data().photo;
+  }
+
+
+  const login= async()=>{
+    const val = await userexist();
+    const photo = await userexistphoto();
+    if(val==0){
+      alert("User Doesnt Exist");
+    }else{
+      // console.log("pass: "+val+"   "+passref.current.value+"   "+ usernameref.current.value);
+      if(val==passref.current.value){
+        if(photo!=0){
+        biscuit.set("photo",photo)
+        }        
+        biscuit.set("username",usernameref.current.value);
+        alert("Logged in Successfully");
+        goto("/profilepage");
+      }else{
+        alert("wrong password");
+      }
+    }
+  }
+
+
+
   return (
     <div className="alk ">
       <nav className="navbar p-3 flex flex-row justify-center sticky top-0">
@@ -254,17 +646,17 @@ const LoginPage = () => {
               OrionChat
             </div>
             <div className="w-6 "></div>
+            <div className="mon flex flex-col justify-center cursor-pointer"    onClick={()=>goto("/")}>Home</div>
+            {/* <div className="w-6 "></div>
             <div className="mon flex flex-col justify-center ">Home</div>
             <div className="w-6 "></div>
-            <div className="mon flex flex-col justify-center ">Home</div>
-            <div className="w-6 "></div>
-            <div className="mon flex flex-col justify-center ">Home</div>
+            <div className="mon flex flex-col justify-center ">Home</div> */}
           </div>
 
           <div className="flex flex-row">
             {/* <button className="navbtn">Log in</button> */}
             <div className="w-5"></div>
-            <button className="navbtn1 mon pt-0.5">Register</button>
+            {/* <button className="navbtn1 mon pt-0.5">Register</button> */}
             <div className="w-30"></div>
             {/* <button className="navbtn3">Stealth View</button> */}
           </div>
@@ -279,7 +671,7 @@ const LoginPage = () => {
               <div className="lb1b">
                 <p className="aa inline-block">Login</p>
               </div>
-              <div className="lb1g">Register</div>
+              <div className="lb1g" onClick={()=>{goto("/RegisterPage");}}>Register</div>
             </div>
             <div className="asfes h-5"></div>
             <div className="wlcm flex flex-row ">
@@ -317,7 +709,7 @@ alternate_email
 </span>
   </span>
   </div>
-  <input className="lkj3" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"></input>
+  <input className="lkj3" type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" ref={usernameref}></input>
 </div>
 
 
@@ -339,7 +731,7 @@ visibility_off
 </span>
   }</span>
     </div>
-  <input className="lkj3" type={seepass?"text":"password"} class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1"></input>
+  <input className="lkj3" type={seepass?"text":"password"} class="form-control" placeholder="Password" aria-label="Password" aria-describedby="basic-addon1" ref={passref}></input>
 </div>
 
 
@@ -348,10 +740,10 @@ visibility_off
 <div className="asd3"></div>
 
 <div className="divbtnasd ">
-  <button className="asdbtn">Login</button>
+  <button className="asdbtn" onClick={login}>Login</button>
 </div>
 
-<div className="divbtnasd"><p>Don't have an account?</p><div className="ads flex w-2"></div><p className="k text-white cursor-pointer"> Register</p></div>
+<div className="divbtnasd"><p>Don't have an account?</p><div className="ads flex w-2"></div><p className="k text-white cursor-pointer" onClick={()=>{goto("/RegisterPage");}}> Register</p></div>
 
 <div className="asd4"></div>
 
@@ -359,7 +751,7 @@ visibility_off
 
 
 <div className="divbtnasd2 text-white">
-  <div className="fsa cursor-pointer">
+  <div className="fsa cursor-pointer" onClick={googlesignin}>
 
 <i class="bi bi-google"></i>
   </div>
@@ -382,19 +774,13 @@ visibility_off
   );
 };
 
-//-------------------------profile page------------------------
 
-const ProfilePage = () => {
-  return <div></div>;
-};
 
-//----------------------landing page------------------------------
+//--------------------------navbar--------------------
 
-const Landingpage = () => {
-  return (
-    <div>
-      <div className="hpage ">
-        <nav className="navbar p-3 flex flex-row justify-center sticky top-0">
+const Navbar=()=>{
+  return <>
+      <nav className="navbar p-3 flex flex-row justify-center">
           <div className="a3 flex flex-row justify-between">
             <div className="flex flex-row">
               <div>
@@ -413,11 +799,283 @@ const Landingpage = () => {
             </div>
 
             <div className="flex flex-row">
-              <button className="navbtn">Log in</button>
+              <button className="navbtn" onClick={()=>{goto("/LoginPage");}}>Log in</button>
               <div className="w-5"></div>
-              <button className="navbtn1 mon pt-0.5">Register</button>
+              <button className="navbtn1 mon pt-0.5" onClick={()=>{goto("/RegisterPage");}}>Register</button>
               {/* <div className="w-4"></div> */}
               {/* <button className="navbtn3">Stealth View</button> */}
+            </div>
+          </div>
+        </nav>
+  </>;
+}
+
+
+//-------------------------profile page------------------------
+
+const ProfilePage = ({roomslist,setroomslist}) => {
+    const biscuit = new Cookies();
+  //changes when page refreshed . so stored in localstorage with key as inroom
+  const [inroom, setinroom] = useState("");
+  const goto= useNavigate();
+  const [see,setsee]= useState(false);
+  const roomref = useRef(null);
+
+  const imgfref = ref(storage, "images/");
+  const [img, setimg] = useState(null);
+
+  const [imgname, setimgname] = useState("");
+  const [imgurl, setimgurl] = useState("");
+
+  useEffect(() => {
+    const querymsg = query(
+      msgdbref,
+      where("user", "==", biscuit.get("username"))
+    );
+
+    onSnapshot(querymsg, (snapshot) => {
+      let roomss = [];
+      snapshot.forEach((doc) => {
+        roomss.push(doc.data().room);
+      });
+
+      function removeDuplicates(roomss) {
+        return roomss.filter((item, index) => roomss.indexOf(item) === index);
+      }
+      const rroom = removeDuplicates(roomss);
+
+      setroomslist(rroom);
+      // console.log(roomslist)
+    });
+  }, []);
+
+
+  const enterroom=()=>{
+    if(roomref.current.value==""){
+
+    }else{
+      biscuit.set("chat-room",roomref.current.value)
+      goto("/chat_layout")
+    }
+  }
+
+  const logout=()=>{
+    auth.signOut();
+
+    biscuit.remove("username");
+    biscuit.remove("chat-room");
+    biscuit.remove("auth-token");
+    biscuit.remove("photo");
+
+    goto("/");
+  }
+
+  const getdocid =async()=>{
+    const querymsg = await query(
+      userdbref,
+      where("username","==",biscuit.get("username"))
+    );
+    
+    const snapshot = await getDocs(querymsg);
+    await snapshot;
+
+return       snapshot.docs[0].id
+    
+
+  }
+
+  const Uploadimg = async () => {
+    console.log("started")
+    if (img == null) {
+      console.log("no")
+      return;
+    }
+    const a = img.name + v4();
+    setimgname(`${a}`);
+    const imgdburlref = ref(storage, `images/${a}`);
+
+    console.log("is this item");
+    console.log(imgdburlref);
+    const imgref = ref(storage, `images/${a}`);
+
+    await uploadBytes(imgref, img).then(() => {
+      alert("Your File is Uploaded");
+    });
+
+    biscuit.set("img-name", a);
+
+    const imgurll = await getDownloadURL(imgdburlref);
+    const viddata = await getMetadata(imgdburlref);
+    biscuit.set("photo",imgurll);
+
+    const docid = await getdocid();
+    await docid;
+
+    const docref = firestore.collection("users").doc(docid);
+
+    const newdata={
+      photo: imgurll
+    }
+
+
+    docref.update(newdata)
+  .then(() => {
+    console.log('Data updated successfully.');
+  })
+  .catch((error) => {
+    console.error('Error updating data:', error);
+  });
+
+    
+
+    
+
+  };
+
+  return <div>
+    <div className="pfpage">
+      {/* <div className="pfimg"> */}
+      <img src={biscuit.get("photo")?biscuit.get("photo"):"./src/assets/images/pfp.png"} className="pfimg" onClick={()=>setsee(!see)}/>
+      {/* </div> */}
+      <img src={biscuit.get("photo")?biscuit.get("photo"):"./src/assets/images/pfp.png"} className="pfbanner" />
+      {/* <div className="pfbanner"></div> */}
+
+
+
+      <div className="pfhome" onClick={()=>goto("/")}>
+      <span class="material-symbols-outlined">home</span>
+      </div>
+
+<div className="asdf" style={{display:`${see?"":"none"}`}}>
+  
+
+<button className="asdfbtn3" onClick={()=>{
+  setsee(false);
+  
+  // console.log(img)
+}}>x</button>
+
+
+      <div className="toggleimg">
+      <img src={biscuit.get("photo")?biscuit.get("photo"):"./src/assets/images/pfp.png"} className="upfp" />
+        <button className="asdfbtn2" onClick={()=>{
+          console.log("clicked")
+          Uploadimg()
+        }}>Update Avatar</button>
+        {/* <button className="asdfbtn1">Choose Avatar</button> */}
+        <input type="file" className="asdfbtn1"  onChange={(e) => {setimg(e.target.files[0]);}}/>
+      </div>
+</div>
+
+
+      <button className="asdbtn3" onClick={logout}>Logout</button>
+
+      <div className="pfname">
+        <p>{biscuit.get("username")}</p>
+      </div>
+      <div className="pfbottompart">
+        <div className="pfbox">
+          <div className="ech">Create/Enter ChatRoom</div>
+          <input type="text" className="ecinput" placeholder="ChatRoom ID" ref={roomref}></input>
+          <button className="asdbtn2" onClick={enterroom}>Enter</button>
+          {/* <input type="text" class="form-control" placeholder="Chatroom ID" aria-label="Username" aria-describedby="basic-addon1" className="kjl mt-12"/> */}
+
+        </div>
+
+        <div className="pfchatsbox">
+            <div className="nji1">Chats</div>
+          <div className="pfchatslist">
+          <div
+        className=""
+        onClick={() => {
+          console.log(roomslist);
+          window.location.reload();
+        }}
+      >
+        <div className="roomattopstick sticky">
+          <div className="ahuja h-5"></div>
+          {roomslist.map((roomslist) => {
+            return (
+              <div>
+                <div className="oiho flex flex-row justify-between flex-grow">
+                  <div className="twins"></div>
+
+                  <div
+                    className="click-chat2 grow"
+                    style={{
+                    }}
+                    onClick={() => {
+                      biscuit.set("chat-room", roomslist);
+                      localStorage.setItem("inroom", roomslist);
+                      goto("/chat_layout");   
+                    }}
+                  >
+                    <div className="room-deco-out ">
+                      <img
+                        src="https://picsum.photos/200"
+                        className="room-photo-l"
+                      />
+                      <div className="" style={{ width: "20px" }}></div>
+                      <div className="room-deco-l">{roomslist}</div>
+                    </div>
+                  </div>
+                  <div className="twins"></div>
+                </div>
+                <div className="h-1"></div>
+              </div>
+            );
+          })}
+        </div>
+      </div>          </div>
+        </div>
+      </div>
+    </div>
+  </div>;
+};
+
+//----------------------landing page------------------------------
+
+const Landingpage = () => {
+  const biscuit = new Cookies();
+  const goto= useNavigate();
+  return (
+    <div>
+      <div className="hpage ">
+        <nav className="navbar p-3 flex flex-row justify-center sticky top-0">
+          <div className="a3 flex flex-row justify-between">
+            <div className="flex flex-row">
+              <div>
+                <img src="./src/assets/images/logo.png" className="h-8" />
+              </div>
+              <div className="w-1 "></div>
+              <div className="fon flex flex-col justify-center text-bg">
+                OrionChat
+              </div>
+              <div className="w-6 "></div>
+              {/* <div className="mon flex flex-col justify-center ">Home</div>
+              <div className="w-6 "></div>
+              <div className="mon flex flex-col justify-center ">Home</div>
+              <div className="w-6 "></div>
+              <div className="mon flex flex-col justify-center ">Home</div> */}
+            </div>
+
+            <div className="flex flex-row">
+
+
+              {
+                biscuit.get("username")
+                ?
+                <div className="Lpfp" onClick={()=>goto("/profilepage")}>
+                        <img src="./src/assets/images/pfp.png" className="Lpfp" />
+                </div>
+                :
+                <>
+              <button className="navbtn" onClick={()=>{goto("/LoginPage");}}>Log in</button>
+                <div className="w-5"></div>
+              <button className="navbtn1 mon pt-0.5" onClick={()=>{goto("/RegisterPage");}}>Register</button>
+                </>
+              }
+      
             </div>
           </div>
         </nav>
@@ -449,7 +1107,7 @@ const Landingpage = () => {
         <div className="c3 flex flex-row justify-center">
           <div className="d1 flex justify-center ">
             {" "}
-            <button className="navbtn4">Get Started {">"}</button>{" "}
+            <button className="navbtn4" onClick={()=>{goto("/RegisterPage");}}>Get Started {">"}</button>{" "}
           </div>
         </div>
 
@@ -478,7 +1136,9 @@ const Landingpage = () => {
                 Enter the untamed realm of{" "}
                 <span className="bg bg-blue-600">Anonymous Browsing</span> ,
                 where conversations flow freely, your identity stays secret, and
-                authentic interactions know no bounds.
+                authentic interactions know no bounds.Sign up effortlessly,
+                 <span className="bg bg-blue-600">No Gmail required</span>
+                 , and become a part of this anonymous community today!
               </p>
             </div>
           </div>
@@ -616,8 +1276,8 @@ export const Leftuniv = ({ roomslist, setroomslist }) => {
 
   return (
     <div className="left-god sticky top-0">
-      {biscuit.get("auth-token") != undefined &&
-      biscuit.get("user-id") != undefined ? (
+      {
+      biscuit.get("username") ? (
         <div className="">
           <Chatroomlist roomslist={roomslist} setroomslist={setroomslist} />
         </div>
@@ -631,6 +1291,7 @@ export const Leftuniv = ({ roomslist, setroomslist }) => {
 //------------------------------------chat room list---------------------------------------
 
 export const Chatroomlist = ({ roomslist, setroomslist }) => {
+  const goto=useNavigate();
   const biscuit = new Cookies();
   //changes when page refreshed . so stored in localstorage with key as inroom
   const [inroom, setinroom] = useState("");
@@ -638,7 +1299,7 @@ export const Chatroomlist = ({ roomslist, setroomslist }) => {
   useEffect(() => {
     const querymsg = query(
       msgdbref,
-      where("user", "==", biscuit.get("user-id"))
+      where("user", "==", biscuit.get("username"))
     );
 
     onSnapshot(querymsg, (snapshot) => {
@@ -662,13 +1323,20 @@ export const Chatroomlist = ({ roomslist, setroomslist }) => {
       <div className="chat-banner sticky top-0">
         <div className="room-banner-2 flex flex-row justify-between sticky top-0">
           {/* <div>a</div> */}
-          <p className="roomname rounded-xl p-5 text-xl">Rooms</p>
+          <p className="roomname rounded-xl text-xl">Rooms</p>
+          <div className="pfhome2" onClick={()=>{
+            goto("/profilepage");
+            
+          }}>
+    <div className="Lpfp" onClick={()=>goto("/profilepage")}>
+                        <img src={biscuit.get("photo")?biscuit.get("photo"):"./src/assets/images/pfp.png"} className="Lpfp" />
+                </div>          </div>
 
-          <img
+          {/* <img
             src="./src/assets/images/more_vert.png"
             style={{ height: 55, paddingTop: 13 }}
             onClick={() => {}}
-          ></img>
+          ></img> */}
         </div>
       </div>
       <div
@@ -1264,15 +1932,13 @@ export const Popup = (props) => {
     console.log(viddata.contentType);
     // console.log(imgurll)
 
-    await addDoc(msgdbref, {
+    await addDoc(msgdbref,
+       {
       text: "",
       createdAt: serverTimestamp(),
-      user:
-        biscuit.get("auth-token") === "browsing_anonymously"
-          ? biscuit.get("user-id")
-          : auth.currentUser.uid,
-      photo: !(biscuit.get("auth-token") === "browsing_anonymously")
-        ? auth.currentUser.photoURL
+      user:biscuit.get("username"),
+      photo: biscuit.get("photo")
+        ? biscuit.get("photo")
         : "https://picsum.photos/200",
       room: biscuit.get("chat-room"),
       content_url: imgurll,
@@ -1280,6 +1946,7 @@ export const Popup = (props) => {
       msgtype: viddata.contentType,
       user_name: biscuit.get("username"),
     });
+
   };
 
   // useEffect(()=>{
@@ -1407,11 +2074,11 @@ export const Testchatrom = (props) => {
       text: newmsg,
       createdAt: serverTimestamp(),
       user:
-        biscuit.get("auth-token") === "browsing_anonymously"
-          ? biscuit.get("user-id")
-          : auth.currentUser.uid,
-      photo: !(biscuit.get("auth-token") === "browsing_anonymously")
-        ? auth.currentUser.photoURL
+      biscuit.get("username")
+      ? biscuit.get("username")
+          : auth.currentUser.displayName,
+      photo: biscuit.get("photo")
+        ? biscuit.get("photo")
         : "https://picsum.photos/200",
       room: biscuit.get("chat-room"),
       content_url: "",
@@ -1432,7 +2099,7 @@ export const Testchatrom = (props) => {
         <div className="borderdiv">
           <div className="room-banner flex flex-row justify-center sticky top-0">
             <div></div>
-            <p className="roomname rounded-xl p-5 text-xl">
+            <p className="roomname rounded-xl text-xl">
               {biscuit.get("chat-room")}
             </p>
             <div className="out text-xl flex  flex-row justify-center">
@@ -1450,7 +2117,7 @@ export const Testchatrom = (props) => {
                 <>
                   <div
                     className={`message1 text-xl flex ${
-                      messages.user === biscuit.get("user-id")
+                      messages.user === biscuit.get("username")
                         ? " flex-row-reverse"
                         : " flex-row"
                     } `}
@@ -1464,7 +2131,7 @@ export const Testchatrom = (props) => {
                           <img
                             src={messages.content_url}
                             className={`imageee ${
-                              messages.user === biscuit.get("user-id")
+                              messages.user === biscuit.get("username")
                                 ? "m-sent"
                                 : "m-recieved"
                             }`}
@@ -1474,7 +2141,7 @@ export const Testchatrom = (props) => {
                           <video
                             src={messages.content_url}
                             className={`videooo ${
-                              messages.user === biscuit.get("user-id")
+                              messages.user === biscuit.get("username")
                                 ? "m-sent"
                                 : "m-recieved"
                             }`}
@@ -1485,14 +2152,14 @@ export const Testchatrom = (props) => {
                             {" "}
                             <p
                               className={`m-deco-txt flex flex-col justify-center py-0 px-2 rounded ${
-                                messages.user === biscuit.get("user-id")
+                                messages.user === biscuit.get("username")
                                   ? "m-sent"
                                   : "m-recieved"
                               }`}
                             >
                               {" "}
                               <p className="user-name">
-                                {messages.user === biscuit.get("user-id")
+                                {messages.user === biscuit.get("username")
                                   ? ""
                                   : `~${messages.user_name}`}
                               </p>{" "}
@@ -1504,7 +2171,7 @@ export const Testchatrom = (props) => {
                             href={messages.content_url}
                             target="_blank"
                             className={`message22 flex ${
-                              messages.user === biscuit.get("user-id")
+                              messages.user === biscuit.get("username")
                                 ? "m-sent"
                                 : "m-recieved"
                             }`}
@@ -1512,7 +2179,7 @@ export const Testchatrom = (props) => {
                             {" "}
                             <p
                               className={`m-deco-txt flex flex-col justify-center pb-1 px-2 rounded ${
-                                messages.user === biscuit.get("user-id")
+                                messages.user === biscuit.get("username")
                                   ? "m-sent"
                                   : "m-recieved"
                               }`}
@@ -1534,24 +2201,43 @@ export const Testchatrom = (props) => {
         <form className="msg  flex-row sticky bottom-0" onSubmit={formsubmit}>
           <div className="dd sticky bottom-0   flex flex-col justify-center">
             <div className="yesss ">
-              <div className="nooo justify-between flex flex-row">
-                <Uploadbtn className="text-xl" />
-                <input
-                  type="text"
-                  className="message-input text-xs px-5"
-                  ref={msgref}
-                  placeholder="Type a message"
-                />
-                <div></div>
-                <button
+              <div className="nooo justify-start ">
+
+
+              <button
                   className="msg-send-btn "
                   onClick={(e) => {
+                    
                     setnewmsg(msgref.current.value);
                   }}
                 >
                   send{" "}
                 </button>
-                <div></div>
+
+
+                <input
+                  type="text"
+                  className="message-input text-xs px-5"
+                  ref={msgref}
+                  placeholder="Type a message"
+                  onKeyDown={(e)=>{
+                    if (e.key == 'Enter') {
+                      // setnewmsg(msgref.current.value);
+                      // e.preventDefault();
+
+                    }
+                  }}
+                />
+
+                {/* <div></div> */}
+
+
+           
+
+                <Uploadbtn className="text-xl" />
+
+
+                {/* <div></div> */}
               </div>
             </div>
           </div>
@@ -1614,7 +2300,7 @@ export const SigninWithGoogle = ({ isauth, setisauth }) => {
       const provider = new firebase.auth.GoogleAuthProvider();
       const result = await auth.signInWithPopup(provider);
       biscuit.set("auth-token", result.user.refreshToken);
-      biscuit.set("user-id", result.user.uid);
+      biscuit.set("username", result.user.uid);
       setisauth(true);
       goto("/selectchat");
     } catch (err) {
@@ -1646,7 +2332,7 @@ const Signout = ({ isauth, setisauth }) => {
           if (!bis.get("auth-token") === "browsing_anonymously") {
           }
           bis.remove("auth-token");
-          bis.remove("user-id");
+          // bis.remove("user-id");
           bis.remove("username");
           goto("/");
         }}
@@ -1684,7 +2370,6 @@ const Anonymous = ({ setisauth }) => {
 
 export const Chatroom = ({ setisauth, room, isauth }) => {
   // const goto = useNavigate();
-
   // console.log("from chatroom");
   // isauth?goto("/chatroom"):goto("/");
 
@@ -1795,7 +2480,7 @@ const Selectchat = ({
   const biscuit = new Cookies();
   const goto = useNavigate();
   const usernameref = useRef(null);
-  const inputref = useRef(null);
+  const chatroomref = useRef(null);
 
   //fixing routing
   /*
@@ -1814,38 +2499,49 @@ const Selectchat = ({
   return (
     <div className="selectchat">
       <div className="things">
-        <input type="text" className="input text-black" ref={inputref} />
+        <input type="text" className="input text-black" placeholder="chat room" ref={chatroomref} />
 
         <input
           type="text"
           className="imput text-black"
           ref={usernameref}
           enterKeyHint="apple"
+          placeholder="username"
         />
 
         <button
           className="button text-white"
           onClick={() => {
+
+
+
             if (usernameref.current.value === "") {
-            } else {
-              if (inputref.current.value === "") {
+            }
+             else
+              {
+              if (chatroomref.current.value === "") {
               } else {
-                setroom(inputref.current.value);
+                // setroom(chatroomref.current.value);
               }
               biscuit.set("username", usernameref.current.value);
               if (biscuit.get("auth-token") === "browsing_anonymously") {
-                biscuit.set("user-id", usernameref.current.value);
+                biscuit.set("username", usernameref.current.value);
               }
               setusername(usernameref.current.value);
-              console.log("username:" + biscuit.get("username"));
-              console.log("all set , entering room...");
-              console.log(room);
-              if (inputref.current.value === "") {
+
+              // console.log("username:" + biscuit.get("username"));
+              // console.log("all set , entering room...");
+              // console.log(room);
+
+              if (chatroomref.current.value === "") {
               } else {
-                biscuit.set("chat-room", inputref.current.value);
+                biscuit.set("chat-room", chatroomref.current.value);
               }
               goto("/chat_layout");
             }
+
+
+
           }}
         >
           enter chat
