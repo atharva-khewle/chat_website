@@ -1,6 +1,6 @@
-# OrinChat (Work in Progress)
+# OrinChat
 
-Welcome to OrinChat! OrinChat is an ongoing project designed to facilitate communication through chat rooms, allowing users to engage in both one-on-one and group discussions.
+Welcome to OrinChat! OrinChat is designed to facilitate communication through chat rooms, allowing users to engage in both one-on-one and group discussions.
 
 ## Features
 
