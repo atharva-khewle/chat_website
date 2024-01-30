@@ -13,8 +13,6 @@ Welcome to OrionChat! This platform is crafted to enhance communication through 
 
 - **Website**: will be updated shortly. stay tuned...
 
-Watch the video walkthrough or explore the live demo to see OrionChat in action and get a feel for the user experience.
-
 ## Getting Started
 
 OrionChat is in active development, aiming to create a dynamic and engaging platform for communication. Stay tuned for updates and upcoming features!
