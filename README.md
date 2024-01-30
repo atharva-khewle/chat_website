@@ -1,18 +1,25 @@
-# OrinChat
+# OrionChat
 
-Welcome to OrinChat! OrinChat is designed to facilitate communication through chat rooms, allowing users to engage in both one-on-one and group discussions.
+Welcome to OrionChat! This platform is crafted to enhance communication through versatile chat rooms, enabling both individual and group conversations in a user-friendly environment.
 
 ## Features
 
-- **Chat Rooms**: Join various chat rooms for one-on-one or group conversations.
-- **Media Sharing**: Share videos and images to enrich communication within the chat rooms.
-- **Login Options**: Choose to log in through Google authentication or remain anonymous.
-- **Personal Dashboard**: Access your personal dashboard to manage your profile and settings, including the ability to change your profile photo.
+- **Diverse Chat Rooms**: Join rooms for one-on-one or group conversations, tailored to a variety of interests and discussion topics.
+- **Media Sharing Capabilities**: Enrich your chatting experience by sharing videos and images, adding depth to the conversations.
+- **Flexible Login Options**: Log in with Google for quick access or choose anonymous entry for privacy.
+- **Personalized Dashboard**: Manage your profile and settings with ease. Customize your experience by changing your profile photo and more.
 
-### Getting Started
+## Demo
 
-OrinChat is currently in development, creating a platform for diverse conversations. Stay tuned for updates on our progress!
+- **Website**: will be updated shortly. stay tuned...
 
-#### Feedback
+Watch the video walkthrough or explore the live demo to see OrionChat in action and get a feel for the user experience.
 
-Your feedback is vital in shaping the future of OrinChat. Please share your suggestions, feedback, or any ideas.
+## Getting Started
+
+OrionChat is in active development, aiming to create a dynamic and engaging platform for communication. Stay tuned for updates and upcoming features!
+
+### Feedback and Contributions
+
+Your feedback is essential in shaping OrionChat into the best possible version of itself. Please feel free to share your suggestions, ideas, or any feedback you might have. We're committed to continuous improvement and value your input.
+
