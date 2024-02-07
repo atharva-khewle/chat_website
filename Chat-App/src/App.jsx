@@ -1011,7 +1011,7 @@ return       snapshot.docs[0].id
                   >
                     <div className="room-deco-out ">
                       <img
-                        src="https://picsum.photos/200"
+                        src={`https://picsum.photos/2${Math.floor(Math.random() * 100)}`}
                         className="room-photo-l"
                       />
                       <div className="" style={{ width: "20px" }}></div>
@@ -1369,7 +1369,7 @@ export const Chatroomlist = ({ roomslist, setroomslist }) => {
                   >
                     <div className="room-deco-out ">
                       <img
-                        src="https://picsum.photos/200"
+                        src={`https://picsum.photos/2${Math.floor(Math.random() * 100)}`}
                         className="room-photo-l"
                       />
                       <div className="" style={{ width: "20px" }}></div>
@@ -2079,6 +2079,8 @@ export const Testchatrom = (props) => {
       photo: biscuit.get("photo")
         ? biscuit.get("photo")
         : "https://picsum.photos/200",
+
+
       room: biscuit.get("chat-room"),
       content_url: "",
       messaged_photo_name: "",
@@ -2121,7 +2123,9 @@ export const Testchatrom = (props) => {
                         : " flex-row"
                     } `}
                   >
-                    <img src={messages.photo} className="photooo " />
+                    <img 
+                    src={messages.photo=="https://picsum.photos/200"?"./src/assets/images/pfp.png":messages.photo}
+                     className="photooo " />
                     <div className="d w-2"></div>
 
                     <div className="msg-container-outline">
