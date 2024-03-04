@@ -1,23 +1,20 @@
 # OrionChat
 
-Welcome to OrionChat! This platform is crafted to enhance communication through versatile chat rooms, enabling both individual and group conversations in a user-friendly environment.
+Welcome to OrionChat! This platform, my first project with React and Firebase.
 
 ## Features
 
-- **Diverse Chat Rooms**: Join rooms for one-on-one or group conversations, tailored to a variety of interests and discussion topics.
-- **Media Sharing Capabilities**: Enrich your chatting experience by sharing videos and images, adding depth to the conversations.
-- **Flexible Login Options**: Log in with Google for quick access or choose anonymous entry for privacy.
-- **Personalized Dashboard**: Manage your profile and settings with ease. Customize your experience by changing your profile photo and more.
+- **Diverse Chat Rooms**: Join for one-on-one or group conversations.
+- **Media Sharing**: Share videos and images for richer chats.
+- **Login Options**: Google login or anonymous entry.
+- **Personalized Dashboard**: Customize your profile and settings effortlessly.
+
+## Technologies Used
+
+OrionChat is built using:
+- **React**: For a dynamic and responsive user interface.
+- **Firebase**: Providing authentication, database, and hosting services.
 
 ## Demo
 
-- **Website**: will be updated shortly. stay tuned...
-
-## Getting Started
-
-OrionChat is in active development, aiming to create a dynamic and engaging platform for communication. Stay tuned for updates and upcoming features!
-
-### Feedback and Contributions
-
-Your feedback is essential in shaping OrionChat into the best possible version of itself. Please feel free to share your suggestions, ideas, or any feedback you might have. We're committed to continuous improvement and value your input.
-
+- **Website**: Updates coming soon. Stay tuned...
