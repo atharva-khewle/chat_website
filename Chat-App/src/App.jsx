@@ -364,7 +364,7 @@ const RegisterPage = () => {
         <div className="a3 flex flex-row justify-between">
           <div className="flex flex-row "  >
             <div>
-              <img src="./src/assets/images/logo.png" className="h-8" />
+              <img src="/assets/images/logo.png" className="h-8" />
             </div>
             <div className="w-1 "></div>
             <div className="fon flex flex-col justify-center text-bg">
@@ -491,7 +491,7 @@ visibility_off
           </div>
 
           <div className="authen-right">
-            <img src="./src/assets/images/gif.gif" alt="" />
+            <img src="/assets/images/gif.gif" alt="" />
           </div>
         </div>
       </div>
@@ -638,7 +638,7 @@ const LoginPage = () => {
         <div className="a3 flex flex-row justify-between">
           <div className="flex flex-row">
             <div>
-              <img src="./src/assets/images/logo.png" className="h-8" />
+              <img src="/assets/images/logo.png" className="h-8" />
             </div>
             <div className="w-1 "></div>
             <div className="fon flex flex-col justify-center text-bg">
@@ -765,7 +765,7 @@ visibility_off
           </div>
 
           <div className="authen-right">
-            <img src="./src/assets/images/gif.gif" alt="" />
+            <img src="/assets/images/gif.gif" alt="" />
           </div>
         </div>
       </div>
@@ -783,7 +783,7 @@ const Navbar=()=>{
           <div className="a3 flex flex-row justify-between">
             <div className="flex flex-row">
               <div>
-                <img src="./src/assets/images/logo.png" className="h-8" />
+                <img src="/assets/images/logo.png" className="h-8" />
               </div>
               <div className="w-1 "></div>
               <div className="fon flex flex-col justify-center text-bg">
@@ -934,9 +934,9 @@ return       snapshot.docs[0].id
   return <div>
     <div className="pfpage">
       {/* <div className="pfimg"> */}
-      <img src={biscuit.get("photo")?biscuit.get("photo"):"./src/assets/images/pfp.png"} className="pfimg" onClick={()=>setsee(!see)}/>
+      <img src={biscuit.get("photo")?biscuit.get("photo"):"/assets/images/pfp.png"} className="pfimg" onClick={()=>setsee(!see)}/>
       {/* </div> */}
-      <img src={biscuit.get("photo")?biscuit.get("photo"):"./src/assets/images/pfp.png"} className="pfbanner" />
+      <img src={biscuit.get("photo")?biscuit.get("photo"):"/assets/images/pfp.png"} className="pfbanner" />
       {/* <div className="pfbanner"></div> */}
 
 
@@ -956,7 +956,7 @@ return       snapshot.docs[0].id
 
 
       <div className="toggleimg">
-      <img src={biscuit.get("photo")?biscuit.get("photo"):"./src/assets/images/pfp.png"} className="upfp" />
+      <img src={biscuit.get("photo")?biscuit.get("photo"):"/assets/images/pfp.png"} className="upfp" />
         <button className="asdfbtn2" onClick={()=>{
           console.log("clicked")
           Uploadimg()
@@ -1044,7 +1044,7 @@ const Landingpage = () => {
           <div className="a3 flex flex-row justify-between">
             <div className="flex flex-row">
               <div>
-                <img src="./src/assets/images/logo.png" className="h-8" />
+                <img src="/assets/images/logo.png" className="h-8" />
               </div>
               <div className="w-1 "></div>
               <div className="fon flex flex-col justify-center text-bg">
@@ -1065,7 +1065,7 @@ const Landingpage = () => {
                 biscuit.get("username")
                 ?
                 <div className="Lpfp" onClick={()=>goto("/profilepage")}>
-                        <img src={biscuit.get("photo")?biscuit.get("photo"):"./src/assets/images/pfp.png"}  className="Lpfp" />
+                        <img src={biscuit.get("photo")?biscuit.get("photo"):"/assets/images/pfp.png"}  className="Lpfp" />
                 </div>
                 :
                 <>
@@ -1111,7 +1111,7 @@ const Landingpage = () => {
         </div>
 
         <img
-          src="./src/assets/images/img1.jpg"
+          src="/assets/images/img1.jpg"
           className="img1 opacity-20"
           alt=""
         />
@@ -1126,7 +1126,7 @@ const Landingpage = () => {
         {/* -------------------------------------------------------------------------------------------------------------------- */}
         <div className="c2 flex flex-row justify-center ">
           <div className="a3 flex flex-row">
-            <img src="./src/assets/images/img2.png" className="img2" alt="" />
+            <img src="/assets/images/img2.png" className="img2" alt="" />
             <div className="w-20"></div>
             <div className="d2 flex  px-10 py-11 break">
               {" "}
@@ -1156,7 +1156,7 @@ const Landingpage = () => {
 
         <div className="c2 flex flex-row-reverse justify-center ">
           <div className="a3 flex flex-row-reverse">
-            <img src="./src/assets/images/img5.png" className="img2 " alt="" />
+            <img src="/assets/images/img5.png" className="img2 " alt="" />
             <div className="w-20"></div>
             <div className="d2 flex  px-10 py-11">
               <p>
@@ -1183,7 +1183,7 @@ const Landingpage = () => {
 
         <div className="c2 flex flex-row-reverse justify-center ">
           <div className="a3 flex flex-row">
-            <img src="./src/assets/images/img4.png" className="img2" alt="" />
+            <img src="/assets/images/img4.png" className="img2" alt="" />
             <div className="w-20"></div>
             <div className="d2 flex  px-10 py-11">
               <p>
@@ -1208,7 +1208,7 @@ const Landingpage = () => {
         <div className="h-10"></div>
         <div className="c2 flex flex-row-reverse justify-center ">
           <div className="a3 flex flex-row-reverse">
-            <img src="./src/assets/images/img3.jpg" className="img2" alt="" />
+            <img src="/assets/images/img3.jpg" className="img2" alt="" />
             <div className="w-20"></div>
             <div className="d2 flex  px-10 py-11">
               <p>
@@ -1328,11 +1328,11 @@ export const Chatroomlist = ({ roomslist, setroomslist }) => {
             
           }}>
     <div className="Lpfp" onClick={()=>goto("/profilepage")}>
-                        <img src={biscuit.get("photo")?biscuit.get("photo"):"./src/assets/images/pfp.png"} className="Lpfp" />
+                        <img src={biscuit.get("photo")?biscuit.get("photo"):"/assets/images/pfp.png"} className="Lpfp" />
                 </div>          </div>
 
           {/* <img
-            src="./src/assets/images/more_vert.png"
+            src="/assets/images/more_vert.png"
             style={{ height: 55, paddingTop: 13 }}
             onClick={() => {}}
           ></img> */}
@@ -2124,7 +2124,7 @@ export const Testchatrom = (props) => {
                     } `}
                   >
                     <img 
-                    src={messages.photo=="https://picsum.photos/200"?"./src/assets/images/pfp.png":messages.photo}
+                    src={messages.photo=="https://picsum.photos/200"?"/assets/images/pfp.png":messages.photo}
                      className="photooo " />
                     <div className="d w-2"></div>
 
